@@ -64,7 +64,7 @@ def partial_grid(grid, center, observable_depth):
 
     _grid = np.array(grid, copy=True)
     _grid[mask] = -1
-    _grid = stack_map(_grid)  # stack goal map with partial observable map
+    # _grid = stack_map(_grid)  # stack goal map with partial observable map
     return _grid
 
 
