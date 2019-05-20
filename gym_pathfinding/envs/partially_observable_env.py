@@ -4,6 +4,9 @@ import numpy as np
 import gym
 
 from gym_pathfinding.envs.pathfinding_env import PathFindingEnv
+from gym_pathfinding.games.astar import compute_action_planning
+
+GOAL_VALUE = 3
 
 
 class PartiallyObservablePathFindingEnv(gym.Env):
@@ -23,11 +26,13 @@ class PartiallyObservablePathFindingEnv(gym.Env):
 
     def reset(self):
         state = self.env.reset()
-        return self.partial_state(state)
+        label = action_label(state, self.env.game.player, self.env.game.target)
+        return self.partial_state(state), label
 
     def step(self, action):
         state, reward, done, info = self.env.step(action)
-        return self.partial_state(state), reward, done, info
+        label = action_label(state, self.env.game.player, self.env.game.target)
+        return self.partial_state(state), reward, done, info, label
 
     def seed(self, seed=None):
         self.env.seed(seed=seed)
@@ -50,7 +55,7 @@ class PartiallyObservablePathFindingEnv(gym.Env):
     
 def partial_grid(grid, center, observable_depth):
     """return the centered partial state, place -1 to non-visible cells"""
-    
+
     i, j = center
     offset = observable_depth
 
@@ -59,7 +64,9 @@ def partial_grid(grid, center, observable_depth):
 
     _grid = np.array(grid, copy=True)
     _grid[mask] = -1
+    _grid = stack_map(_grid)  # stack goal map with partial observable map
     return _grid
+
 
 def create_partially_observable_pathfinding_env(id, name, lines, columns, observable_depth, *, grid_type="free"):
 
@@ -97,8 +104,26 @@ envs = [
 for env_class in envs:
     globals()[env_class.__name__] = env_class
 
+
 def get_env_classes():
     return envs
 
 
-        
+def action_label(gridmap, start, goal):
+    path, action_planning = compute_action_planning(gridmap, start, goal)
+    return action_planning[0]
+
+
+def stack_map(grid_map,):
+    # Goal grid contains something only if the goal is visible
+    where_is_goal = grid_map == GOAL_VALUE
+
+    def create_goal_grid(shape, goal_position):
+        goal_grid = np.zeros(shape, dtype=np.int8)
+        goal_grid[goal_position] = 10
+        return goal_grid
+
+    goal_map = create_goal_grid(grid_map.shape, where_is_goal)
+    # Stack partial and goal grid
+    image = np.stack([grid_map, goal_map], axis=2)
+    return image

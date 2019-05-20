@@ -1,12 +1,17 @@
 # Author: Christian Careaga (christian.careaga7@gmail.com)
 # A* Pathfinding in Python
-
+import operator
 import numpy
 from heapq import heappush, heappop
 from gym_pathfinding.games.gridworld import MOUVEMENT
 
+# reversed MOUVEMENT dict
+ACTION = {mouvement: action for action, mouvement in dict(enumerate(MOUVEMENT)).items()}
+
+
 def heuristic(a, b):
     return (b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2
+
 
 def astar(grid, start, goal):
 
@@ -48,10 +53,26 @@ def astar(grid, start, goal):
             if neighbor in close_set and tentative_g_score >= gscore.get(neighbor, 0):
                 continue
                 
-            if  tentative_g_score < gscore.get(neighbor, 0) or neighbor not in [i[1]for i in oheap]:
+            if tentative_g_score < gscore.get(neighbor, 0) or neighbor not in [i[1]for i in oheap]:
                 came_from[neighbor] = current
                 gscore[neighbor] = tentative_g_score
                 fscore[neighbor] = tentative_g_score + heuristic(neighbor, goal)
                 heappush(oheap, (fscore[neighbor], neighbor))
-                
+
     return False
+
+
+def compute_action_planning(grid, start, goal):
+    path = astar(grid, start, goal)
+
+    action_planning = []
+    for i in range(len(path) - 1):
+        pos = path[i]
+        next_pos = path[i + 1]
+
+        # mouvement = (-1, 0), (1, 0), (0, -1), (0, 1)
+        mouvement = tuple(map(operator.sub, next_pos, pos))
+
+        action_planning.append(ACTION[mouvement])
+
+    return path, action_planning

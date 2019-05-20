@@ -53,7 +53,6 @@ class PathFindingGame(object):
         state[self.target[0], self.target[1]] = 3
         return state
 
-
     def step(self, a):
         if self.terminal:
             return self.step_return(1)
