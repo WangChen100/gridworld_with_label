@@ -1,9 +1,9 @@
 import gym
-import gym_pathfinding
+import gridworld
 from time import sleep
 
 env = gym.make('partially-observable-pathfinding-maze-9x9-d10-v0')
-env.seed(1) # for full-deterministic environment
+env.seed(1)  # for full-deterministic environment
 
 for episode in range(5):
     s = env.reset()

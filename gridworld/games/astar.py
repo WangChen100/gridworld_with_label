@@ -3,7 +3,7 @@
 import operator
 import numpy
 from heapq import heappush, heappop
-from gym_pathfinding.games.gridworld import MOUVEMENT
+from gridworld.games.gridworld import MOUVEMENT
 
 # reversed MOUVEMENT dict
 ACTION = {mouvement: action for action, mouvement in dict(enumerate(MOUVEMENT)).items()}

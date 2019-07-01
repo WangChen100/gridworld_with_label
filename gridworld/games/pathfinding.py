@@ -5,7 +5,7 @@ from queue import PriorityQueue
 import numpy as np
 import scipy.misc
 
-from gym_pathfinding.games.gridworld import generate_grid, is_legal, MOUVEMENT
+from gridworld.games.gridworld import generate_grid, is_legal, MOUVEMENT
 
 class PathFindingGame(object):
     """

@@ -3,7 +3,7 @@ import pytest
 
 import numpy as np
 
-from gym_pathfinding.envs.partially_observable_env import partial_grid
+from gridworld.envs.partially_observable_env import partial_grid
 
 def test_partial_state():
 	state = np.array([

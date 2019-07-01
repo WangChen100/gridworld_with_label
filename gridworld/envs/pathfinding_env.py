@@ -3,8 +3,8 @@ import numpy as np
 import gym
 from gym import error, spaces, utils
 
-from gym_pathfinding.games.pathfinding import PathFindingGame
-from gym_pathfinding.rendering import GridViewer
+from gridworld.games.pathfinding import PathFindingGame
+from gridworld.rendering import GridViewer
 
 
 class PathFindingEnv(gym.Env):

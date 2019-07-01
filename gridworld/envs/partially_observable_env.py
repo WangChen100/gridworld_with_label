@@ -3,8 +3,8 @@
 import numpy as np
 import gym
 
-from gym_pathfinding.envs.pathfinding_env import PathFindingEnv
-from gym_pathfinding.games.astar import compute_action_planning
+from gridworld.envs.pathfinding_env import PathFindingEnv
+from gridworld.games.astar import compute_action_planning
 
 GOAL_VALUE = 3
 
