@@ -1,4 +1,4 @@
-# gym-pathfinding
+# gridworld-gym
 
 An OpenAI Gym implementation for the pathfinding problem.
 
@@ -8,7 +8,7 @@ An OpenAI Gym implementation for the pathfinding problem.
 
 ## Installation
 ```bash
-git clone [url_repo]
+git clone git@github.com:WangChen100/gridworld_with_label.git
 cd gym-pathfinding
 pip install -e .
 ```
@@ -16,7 +16,7 @@ pip install -e .
 ## Basic Usage
 ```python
 import gym
-import gym_pathfinding
+import gridworld
 from time import sleep
 
 env = gym.make('pathfinding-obstacle-25x25-v0')
@@ -61,7 +61,7 @@ partially-observable-pathfinding-[grid_type]-[size_w]x[size_h]-d[observation_dep
 - observation_depth : between 2 and 10
 
 ## Information
-The initiale project come from https://github.com/cair/gym-maze
+The initial project come from <https://github.com/DidiBear/gym-pathfinding>
 
 ## Licence
 Copyright 2017 Per-Arne Andersen
